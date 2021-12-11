@@ -1,23 +1,31 @@
-CREATE TABLE restaurants (
-  id BIGSERIAL NOT NULL PRIMARY KEY,
-  name VARCHAR(50) NOT NULL,
-  location VARCHAR(50) NOT NULL,
-  price_range INT NOT NULL check(
-    price_range >= 1
-    AND price_range <= 5
-  )
+CREATE TABLE athletes(
+  id SERIAL PRIMARY KEY,
+  firstname VARCHAR(30) NOT NULL,
+  lastname VARCHAR(30) NOT NULL,
+  gender VARCHAR(30),
+  dob VARCHAR(4),
+  club VARCHAR(50)
 );
 
-INSERT INTO restaurants(name, location, price_range)
-VALUES ('Iya Toyosi', 'Sagamu', 3);
+CREATE TABLE events(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	type VARCHAR(10),
+	date DATE,
+	time TIME,
+	location VARCHAR(100),
+	city VARCHAR(30),
+	distance VARCHAR(5),
+	unit VARCHAR(2),
+  info TEXT,
+  homepage TEXT
+);
 
-CREATE TABLE reviews (
-  id BIGSERIAL NOT NULL PRIMARY KEY,
-  restaurant_id BIGINT REFERENCES restaurants(id) ON DELETE CASCADE,
-  name VARCHAR(50) NOT NULL,
-  review TEXT NOT NULL,
-  rating INT NOT NULL check(
-    rating >= 1
-    AND rating <= 5
-  )
+CREATE TABLE results(
+	id SERIAL PRIMARY KEY,
+	events_id SMALLINT NOT NULL,
+	athletes_id SMALLINT NOT NULL,
+	hours VARCHAR(2),
+	minutes VARCHAR(2),
+  seconds VARCHAR(2)
 );
