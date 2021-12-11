@@ -4,7 +4,6 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const db = require('./db');
-const { request } = require('express');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -17,11 +16,11 @@ app.use(cors());
 
 app
   .route('/api/v1/athletes')
-  .get(async (request, response, next) => {
+  .get(async (req, res, next) => {
     try {
       const data = await db.query('SELECT * FROM athletes ORDER BY id ASC');
 
-      response.status(200).json({
+      res.status(200).json({
         status: 'success',
         data: data.rows,
       });
@@ -29,8 +28,8 @@ app
       console.error('Error', error);
     }
   })
-  .post(async (request, response, next) => {
-    const { firstname, lastname, gender, dob, club } = request.body;
+  .post(async (req, res, next) => {
+    const { firstname, lastname, gender, dob, club } = req.body;
 
     try {
       const data = await db.query(
@@ -38,7 +37,7 @@ app
         [firstname, lastname, gender, dob, club]
       );
 
-      response.status(200).json({
+      res.status(200).json({
         status: 'success',
         data: data.rows[0],
       });
@@ -51,13 +50,13 @@ app
 
 app
   .route('/api/v1/athletes/:id')
-  .get(async (request, response, next) => {
-    const { id } = request.params;
+  .get(async (req, res, next) => {
+    const { id } = req.params;
 
     try {
       const data = await db.query('SELECT * FROM athletes WHERE id = $1', [id]);
 
-      response.status(200).json({
+      res.status(200).json({
         status: 'success',
         data: data.rows[0],
       });
@@ -65,9 +64,9 @@ app
       console.error('Error', error);
     }
   })
-  .put(async (request, response, next) => {
-    const { id } = request.params;
-    const { firstname, lastname, gender, dob, club } = request.body;
+  .put(async (req, res, next) => {
+    const { id } = req.params;
+    const { firstname, lastname, gender, dob, club } = req.body;
 
     try {
       const data = await db.query(
@@ -75,7 +74,7 @@ app
         [id, firstname, lastname, gender, dob, club]
       );
 
-      response.status(200).json({
+      res.status(200).json({
         status: 'success',
         data: data.rows[0],
       });
@@ -83,8 +82,8 @@ app
       console.error('Error', error);
     }
   })
-  .delete(async (request, response, next) => {
-    const { id } = request.params;
+  .delete(async (req, res, next) => {
+    const { id } = req.params;
 
     try {
       const data = await db.query(
@@ -92,7 +91,7 @@ app
         [id]
       );
 
-      response.status(200).json({
+      res.status(200).json({
         status: 'success',
         data: data.rows[0],
       });
@@ -105,13 +104,13 @@ app
 
 app
   .route('/api/v1/events')
-  .get(async (request, response, next) => {
+  .get(async (req, res, next) => {
     try {
       const data = await db.query(
         'SELECT * FROM events ORDER BY date DESC, time DESC'
       );
 
-      response.status(200).json({
+      res.status(200).json({
         status: 'success',
         data: data.rows,
       });
@@ -119,7 +118,7 @@ app
       console.error('Error', error);
     }
   })
-  .post(async (request, response, next) => {
+  .post(async (req, res, next) => {
     const {
       name,
       type,
@@ -131,7 +130,7 @@ app
       unit,
       info,
       homepage,
-    } = request.body;
+    } = req.body;
 
     try {
       const data = await db.query(
@@ -139,7 +138,7 @@ app
         [name, type, date, time, location, city, distance, unit, info, homepage]
       );
 
-      response.status(200).json({
+      res.status(200).json({
         status: 'success',
         data: data.rows[0],
       });
@@ -152,13 +151,13 @@ app
 
 app
   .route('/api/v1/events/:id')
-  .get(async (request, response, next) => {
-    const { id } = request.params;
+  .get(async (req, res, next) => {
+    const { id } = req.params;
 
     try {
       const data = await db.query('SELECT * FROM events WHERE id = $1', [id]);
 
-      response.status(200).json({
+      res.status(200).json({
         status: 'success',
         data: data.rows[0],
       });
@@ -166,8 +165,8 @@ app
       console.error('Error', error);
     }
   })
-  .put(async (request, response, next) => {
-    const { id } = request.params;
+  .put(async (req, res, next) => {
+    const { id } = req.params;
     const {
       name,
       type,
@@ -179,7 +178,7 @@ app
       unit,
       info,
       homepage,
-    } = request.body;
+    } = req.body;
 
     try {
       const data = await db.query(
@@ -199,7 +198,7 @@ app
         ]
       );
 
-      response.status(200).json({
+      res.status(200).json({
         status: 'success',
         data: data.rows[0],
       });
@@ -207,8 +206,8 @@ app
       console.error('Error', error);
     }
   })
-  .delete(async (request, response, next) => {
-    const { id } = request.params;
+  .delete(async (req, res, next) => {
+    const { id } = req.params;
 
     try {
       const data = await db.query(
@@ -216,7 +215,7 @@ app
         [id]
       );
 
-      response.status(200).json({
+      res.status(200).json({
         status: 'success',
         data: data.rows[0],
       });
@@ -227,8 +226,8 @@ app
 
 // Results
 
-app.route('/api/v1/results').post(async (request, response, next) => {
-  const { events_id, athletes_id, hours, minutes, seconds } = request.body;
+app.route('/api/v1/results').post(async (req, res, next) => {
+  const { events_id, athletes_id, hours, minutes, seconds } = req.body;
 
   try {
     const data = await db.query(
@@ -236,7 +235,7 @@ app.route('/api/v1/results').post(async (request, response, next) => {
       [events_id, athletes_id, hours, minutes, seconds]
     );
 
-    response.status(200).json({
+    res.status(200).json({
       status: 'success',
       data: data.rows[0],
     });
@@ -247,8 +246,8 @@ app.route('/api/v1/results').post(async (request, response, next) => {
 
 // Results ID
 
-app.route('/api/v1/results/:id').delete(async (request, response, next) => {
-  const { id } = request.params;
+app.route('/api/v1/results/:id').delete(async (req, res, next) => {
+  const { id } = req.params;
 
   try {
     const data = await db.query(
@@ -256,7 +255,7 @@ app.route('/api/v1/results/:id').delete(async (request, response, next) => {
       [id]
     );
 
-    response.status(200).json({
+    res.status(200).json({
       status: 'success',
       data: data.rows[0],
     });
@@ -267,30 +266,28 @@ app.route('/api/v1/results/:id').delete(async (request, response, next) => {
 
 // Results athlete ID
 
-app
-  .route('/api/v1/results/athlete/:id')
-  .get(async (request, response, next) => {
-    const { id } = request.params;
+app.route('/api/v1/results/athlete/:id').get(async (req, res, next) => {
+  const { id } = req.params;
 
-    try {
-      const data = await db.query(
-        'SELECT e.id, e.date, e.name, e.distance, e.unit, e.type, r.hours, r.minutes, r.seconds FROM events e, results r WHERE r.athletes_id = $1 AND e.id = r.events_id ORDER BY e.date DESC',
-        [id]
-      );
+  try {
+    const data = await db.query(
+      'SELECT e.id, e.date, e.name, e.distance, e.unit, e.type, r.hours, r.minutes, r.seconds FROM events e, results r WHERE r.athletes_id = $1 AND e.id = r.events_id ORDER BY e.date DESC',
+      [id]
+    );
 
-      response.status(200).json({
-        status: 'success',
-        data: data.rows,
-      });
-    } catch (error) {
-      console.error('Error', error);
-    }
-  });
+    res.status(200).json({
+      status: 'success',
+      data: data.rows,
+    });
+  } catch (error) {
+    console.error('Error', error);
+  }
+});
 
 // Results event ID
 
-app.route('/api/v1/results/event/:id').get(async (request, response, next) => {
-  const { id } = request.params;
+app.route('/api/v1/results/event/:id').get(async (req, res, next) => {
+  const { id } = req.params;
 
   try {
     const data = await db.query(
@@ -298,7 +295,7 @@ app.route('/api/v1/results/event/:id').get(async (request, response, next) => {
       [id]
     );
 
-    response.status(200).json({
+    res.status(200).json({
       status: 'success',
       data: data.rows,
     });
