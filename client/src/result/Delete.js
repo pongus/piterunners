@@ -1,16 +1,11 @@
-import { func, number } from 'prop-types';
+import { number } from 'prop-types';
 import resultsApi from '../apis/resultsApi';
 
-const ResultDelete = ({ resultId: id, onSubmit }) => {
+const ResultDelete = ({ resultId: id }) => {
   const deleteResult = () => {
-    resultsApi
-      .delete(`/${id}`)
-      .then(() => {
-        onSubmit();
-      })
-      .catch((error) => {
-        console.error('Error', error);
-      });
+    resultsApi.delete(`/${id}`).catch((error) => {
+      console.error(error);
+    });
   };
 
   return (
@@ -22,7 +17,6 @@ const ResultDelete = ({ resultId: id, onSubmit }) => {
 
 ResultDelete.propTypes = {
   resultId: number.isRequired,
-  onSubmit: func.isRequired,
 };
 
 export default ResultDelete;

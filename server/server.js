@@ -18,14 +18,16 @@ app
   .route('/api/v1/athletes')
   .get(async (req, res, next) => {
     try {
-      const data = await db.query('SELECT * FROM athletes ORDER BY id ASC');
+      const data = await db.query(
+        'SELECT * FROM athletes ORDER BY firstname ASC, lastname ASC'
+      );
 
       res.status(200).json({
         status: 'success',
         data: data.rows,
       });
     } catch (error) {
-      console.error('Error', error);
+      console.error(error);
     }
   })
   .post(async (req, res, next) => {
@@ -42,7 +44,7 @@ app
         data: data.rows[0],
       });
     } catch (error) {
-      console.error('Error', error);
+      console.error(error);
     }
   });
 
@@ -61,7 +63,7 @@ app
         data: data.rows[0],
       });
     } catch (error) {
-      console.error('Error', error);
+      console.error(error);
     }
   })
   .put(async (req, res, next) => {
@@ -79,7 +81,7 @@ app
         data: data.rows[0],
       });
     } catch (error) {
-      console.error('Error', error);
+      console.error(error);
     }
   })
   .delete(async (req, res, next) => {
@@ -96,7 +98,7 @@ app
         data: data.rows[0],
       });
     } catch (error) {
-      console.error('Error', error);
+      console.error(error);
     }
   });
 
@@ -115,7 +117,7 @@ app
         data: data.rows,
       });
     } catch (error) {
-      console.error('Error', error);
+      console.error(error);
     }
   })
   .post(async (req, res, next) => {
@@ -143,7 +145,7 @@ app
         data: data.rows[0],
       });
     } catch (error) {
-      console.error('Error', error);
+      console.error(error);
     }
   });
 
@@ -162,7 +164,7 @@ app
         data: data.rows[0],
       });
     } catch (error) {
-      console.error('Error', error);
+      console.error(error);
     }
   })
   .put(async (req, res, next) => {
@@ -203,7 +205,7 @@ app
         data: data.rows[0],
       });
     } catch (error) {
-      console.error('Error', error);
+      console.error(error);
     }
   })
   .delete(async (req, res, next) => {
@@ -220,7 +222,7 @@ app
         data: data.rows[0],
       });
     } catch (error) {
-      console.error('Error', error);
+      console.error(error);
     }
   });
 
@@ -240,7 +242,7 @@ app.route('/api/v1/results').post(async (req, res, next) => {
       data: data.rows[0],
     });
   } catch (error) {
-    console.error('Error', error);
+    console.error(error);
   }
 });
 
@@ -260,7 +262,7 @@ app.route('/api/v1/results/:id').delete(async (req, res, next) => {
       data: data.rows[0],
     });
   } catch (error) {
-    console.error('Error', error);
+    console.error(error);
   }
 });
 
@@ -280,7 +282,7 @@ app.route('/api/v1/results/athlete/:id').get(async (req, res, next) => {
       data: data.rows,
     });
   } catch (error) {
-    console.error('Error', error);
+    console.error(error);
   }
 });
 
@@ -291,7 +293,7 @@ app.route('/api/v1/results/event/:id').get(async (req, res, next) => {
 
   try {
     const data = await db.query(
-      'SELECT id, events_id, athletes_id, hours, minutes, seconds, RANK () OVER ( ORDER BY hours, minutes, seconds ) rank FROM results WHERE events_id = $1 ORDER BY rank ASC RETURNING *',
+      'SELECT r.id, r.events_id, r.athletes_id, r.hours, r.minutes, r.seconds, a.firstname, a.lastname, RANK() OVER ( ORDER BY r.hours, r.minutes, r.seconds ) rank FROM results r, athletes a WHERE r.events_id = $1 AND r.athletes_id = a.id ORDER BY rank ASC',
       [id]
     );
 
@@ -300,7 +302,7 @@ app.route('/api/v1/results/event/:id').get(async (req, res, next) => {
       data: data.rows,
     });
   } catch (error) {
-    console.error('Error', error);
+    console.error(error);
   }
 });
 

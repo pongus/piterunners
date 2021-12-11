@@ -1,7 +1,11 @@
-import { array, func, string } from 'prop-types';
+import { useEffect, useState } from 'react';
+import { array, string } from 'prop-types';
+import athletesApi from '../apis/athletesApi';
 import resultsApi from '../apis/resultsApi';
 
-const ResultAdd = ({ eventId: id, athletes, results, onSubmit }) => {
+const ResultAdd = ({ eventId: id, results }) => {
+  const [athletes, setAthletes] = useState([]);
+
   const addResult = (event) => {
     event.preventDefault();
 
@@ -18,13 +22,21 @@ const ResultAdd = ({ eventId: id, athletes, results, onSubmit }) => {
           event.target.reset();
         }
       })
-      .then(() => {
-        onSubmit();
-      })
       .catch((error) => {
-        console.error('Error', error);
+        console.error(error);
       });
   };
+
+  useEffect(() => {
+    athletesApi
+      .get('/')
+      .then((response) => {
+        setAthletes(response.data.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [setAthletes]);
 
   return (
     <div>
@@ -85,14 +97,11 @@ const ResultAdd = ({ eventId: id, athletes, results, onSubmit }) => {
 };
 
 ResultAdd.propTypes = {
-  athletes: array,
   results: array,
   eventId: string.isRequired,
-  onSubmit: func.isRequired,
 };
 
 ResultAdd.defaultValues = {
-  athletes: [],
   results: [],
 };
 

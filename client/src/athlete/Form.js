@@ -43,7 +43,7 @@ const AthleteForm = ({ values, onSubmit }) => {
         id="club"
         name="club"
         placeholder="Klubb"
-        defaultValue={club}
+        defaultValue={club || 'Pite Runners LDK'}
       />
       <button type="submit">Spara löpare</button>
     </form>

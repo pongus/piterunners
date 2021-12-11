@@ -8,6 +8,8 @@ CREATE TABLE athletes(
 );
 
 INSERT INTO athletes (firstname, lastname, gender, dob, club) VALUES ('Pontus', 'Gustafsson', 'male', '1983', 'Pite Runners LDK');
+INSERT INTO athletes (firstname, lastname, gender, dob, club) VALUES ('Elin', 'Vikström', 'female', '1990', 'Pite Runners LDK');
+INSERT INTO athletes (firstname, lastname, gender, dob, club) VALUES ('Sammy', 'Pergament', 'male', '1985', 'Pite Runners LDK');
 
 CREATE TABLE events(
   id SERIAL PRIMARY KEY,
@@ -24,6 +26,7 @@ CREATE TABLE events(
 );
 
 INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2020-05-21', '09:00:00', 'Norrstrand', 'Piteå', '10', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Martins träningstävling', 'club', '2020-07-02', '18:00:00', 'Grisberget', 'Piteå', '4,9', 'km');
 
 CREATE TABLE results(
   id SERIAL PRIMARY KEY,
@@ -35,3 +38,5 @@ CREATE TABLE results(
 );
 
 INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (1, 1, '0', '37', '52');
+INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (2, 1, '0', '17', '58');
+INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (2, 3, '0', '17', '50');

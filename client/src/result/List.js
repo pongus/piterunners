@@ -2,81 +2,52 @@ import { useState, useEffect, useContext } from 'react';
 import { string } from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import athletesApi from '../apis/athletesApi';
+import UserContext from '../auth/User';
 import resultsApi from '../apis/resultsApi';
 
 import ResultAdd from './Add';
 import ResultDelete from './Delete';
 
-import UserContext from '../auth/User';
-
 const ResultList = ({ eventId: id }) => {
   const user = useContext(UserContext);
-  const [athletes, setAthletes] = useState([]);
   const [results, setResults] = useState([]);
 
-  const getAthletes = () => {
-    athletesApi
-      .get('/')
-      .then((response) => {
-        setAthletes(response.data.data);
-      })
-      .catch((error) => {
-        console.error('Error', error);
-      });
-  };
+  const getResultRow = (result) => (
+    <tr key={result.id}>
+      <td>{result.rank}</td>
+      <td>
+        <Link to={`/athletes/${result.athletes_id}`}>{result.firstname}</Link>
+      </td>
+      <td>
+        <Link to={`/athletes/${result.athletes_id}`}>{result.lastname}</Link>
+      </td>
+      <td>
+        {result.hours}:{result.minutes}:{result.seconds}
+      </td>
 
-  const getResults = () => {
+      {user.isLoggedIn && (
+        <td>
+          <ResultDelete resultId={result.id} />
+        </td>
+      )}
+    </tr>
+  );
+
+  useEffect(() => {
     resultsApi
       .get(`/event/${id}`)
       .then((response) => {
         setResults(response.data.data);
       })
       .catch((error) => {
-        console.error('Error', error);
+        console.error(error);
       });
-  };
-
-  const getResultRow = (result) => (
-    <tr key={result.id}>
-      <td>{result.rank}</td>
-      <td>
-        <Link to={`/athletes/${result.athletes_id}`}>
-          {getName(result.athletes_id).firstname}
-        </Link>
-      </td>
-      <td>
-        {' '}
-        <Link to={`/athletes/${result.athletes_id}`}>
-          {getName(result.athletes_id).lastname}
-        </Link>
-      </td>
-      <td>
-        {result.hours}:{result.minutes}:{result.seconds}
-      </td>
-      {user.isLoggedIn && (
-        <td>
-          <ResultDelete resultId={result.id} onSubmit={() => getResults()} />
-        </td>
-      )}
-    </tr>
-  );
-
-  const getName = (id) => {
-    const athlete = athletes?.find((athlete) => id === athlete.id);
-    return {
-      firstname: athlete?.firstname,
-      lastname: athlete?.lastname,
-    };
-  };
-
-  useEffect(() => {
-    getAthletes();
-    getResults();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [id, setResults]);
 
   return (
     <div>
+      {user.isLoggedIn && <ResultAdd eventId={id} results={results} />}
+
       {results.length > 0 && (
         <div>
           <h3>Resultat</h3>
@@ -97,15 +68,6 @@ const ResultList = ({ eventId: id }) => {
             </table>
           </div>
         </div>
-      )}
-
-      {user.isLoggedIn && (
-        <ResultAdd
-          eventId={id}
-          athletes={athletes}
-          results={results}
-          onSubmit={() => getResults()}
-        />
       )}
     </div>
   );
