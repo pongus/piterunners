@@ -12,6 +12,17 @@ const ResultList = ({ eventId: id }) => {
   const user = useContext(UserContext);
   const [results, setResults] = useState([]);
 
+  useEffect(() => {
+    resultsApi
+      .get(`/event/${id}`)
+      .then((response) => {
+        setResults(response.data.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [id, setResults]);
+
   const getResultRow = (result) => (
     <tr key={result.id}>
       <td>{result.rank}</td>
@@ -32,17 +43,6 @@ const ResultList = ({ eventId: id }) => {
       )}
     </tr>
   );
-
-  useEffect(() => {
-    resultsApi
-      .get(`/event/${id}`)
-      .then((response) => {
-        setResults(response.data.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [id, setResults]);
 
   return (
     <div>

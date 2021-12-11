@@ -11,6 +11,17 @@ const AthleteDetails = () => {
   const [athlete, setAthlete] = useState({});
   const [isEditable, setIsEditable] = useState(false);
 
+  useEffect(() => {
+    athletesApi
+      .get(`/${id}`)
+      .then((response) => {
+        setAthlete(response.data.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [id, setAthlete]);
+
   const editAthlete = (event) => {
     event.preventDefault();
 
@@ -28,7 +39,7 @@ const AthleteDetails = () => {
         }
       })
       .catch((error) => {
-        console.error('Error', error);
+        console.error(error);
       });
   };
 
@@ -41,20 +52,9 @@ const AthleteDetails = () => {
         }
       })
       .catch((error) => {
-        console.error('Error', error);
+        console.error(error);
       });
   };
-
-  useEffect(() => {
-    athletesApi
-      .get(`/${id}`)
-      .then((response) => {
-        setAthlete(response.data.data);
-      })
-      .catch((error) => {
-        console.error('Error', error);
-      });
-  }, [id, setAthlete]);
 
   return (
     <div>

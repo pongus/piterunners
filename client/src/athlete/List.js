@@ -6,18 +6,16 @@ const AthleteList = () => {
   const [athletes, setAthletes] = useState([]);
   const [filter, setFilter] = useState('');
 
-  const getAthleteRow = (athlete) => (
-    <tr key={athlete.id}>
-      <td>
-        <Link to={`athletes/${athlete.id}`}>{athlete.firstname}</Link>
-      </td>
-      <td>
-        <Link to={`athletes/${athlete.id}`}>{athlete.lastname}</Link>
-      </td>
-      <td>{athlete.dob}</td>
-      <td>{athlete.club}</td>
-    </tr>
-  );
+  useEffect(() => {
+    athletesApi
+      .get('/')
+      .then((response) => {
+        setAthletes(response.data.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [setAthletes]);
 
   const getFilter = () => (
     <div className="filter">
@@ -33,16 +31,18 @@ const AthleteList = () => {
     setFilter(event.target.value.toLowerCase().trim());
   };
 
-  useEffect(() => {
-    athletesApi
-      .get('/')
-      .then((response) => {
-        setAthletes(response.data.data);
-      })
-      .catch((error) => {
-        console.error('Error', error);
-      });
-  }, [setAthletes]);
+  const getAthleteRow = (athlete) => (
+    <tr key={athlete.id}>
+      <td>
+        <Link to={`athletes/${athlete.id}`}>{athlete.firstname}</Link>
+      </td>
+      <td>
+        <Link to={`athletes/${athlete.id}`}>{athlete.lastname}</Link>
+      </td>
+      <td>{athlete.dob}</td>
+      <td>{athlete.club}</td>
+    </tr>
+  );
 
   return (
     <div>

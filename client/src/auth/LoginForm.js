@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { func } from 'prop-types';
 
-const LoginPage = ({ onLogin }) => {
-  const fakeUsername = 'admin';
-  const fakePassword = 'admin';
+const fakeUsername = 'admin';
+const fakePassword = 'admin';
 
+const LoginPage = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 

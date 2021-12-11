@@ -6,6 +6,17 @@ import resultsApi from '../apis/resultsApi';
 const ResultAdd = ({ eventId: id, results }) => {
   const [athletes, setAthletes] = useState([]);
 
+  useEffect(() => {
+    athletesApi
+      .get('/')
+      .then((response) => {
+        setAthletes(response.data.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [setAthletes]);
+
   const addResult = (event) => {
     event.preventDefault();
 
@@ -26,17 +37,6 @@ const ResultAdd = ({ eventId: id, results }) => {
         console.error(error);
       });
   };
-
-  useEffect(() => {
-    athletesApi
-      .get('/')
-      .then((response) => {
-        setAthletes(response.data.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [setAthletes]);
 
   return (
     <div>

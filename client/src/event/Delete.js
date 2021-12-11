@@ -11,7 +11,7 @@ const EventDelete = ({ eventId: id }) => {
         }
       })
       .catch((error) => {
-        console.error('Error', error);
+        console.error(error);
       });
   };
 

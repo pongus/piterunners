@@ -2,26 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import eventsApi from '../apis/eventsApi';
 
+const currentDate = new Date().toLocaleDateString('sv-SE');
+const formatDate = (date) => new Date(date).toLocaleDateString('sv-SE');
+
 const ResultLists = () => {
   const [events, setEvents] = useState([]);
   const [filter, setFilter] = useState('');
-  const currentDate = new Date().toLocaleDateString('sv-SE');
-  const formatDate = (date) => new Date(date).toLocaleDateString('sv-SE');
 
-  const getEventRow = (event) => (
-    <tr key={event.id}>
-      <td>{formatDate(event.date)}</td>
-      <td>
-        <Link to={`events/${event.id}`}>{event.name} </Link>
-      </td>
-      <td>
-        {event.distance} {event.unit}
-      </td>
-      <td>
-        {event.location}, {event.city}
-      </td>
-    </tr>
-  );
+  useEffect(() => {
+    eventsApi
+      .get('/')
+      .then((response) => {
+        setEvents(
+          response.data.data.filter(
+            (event) => event.date <= currentDate && event.type === 'club'
+          )
+        );
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [setEvents]);
 
   const getFilter = () => (
     <div className="filter">
@@ -37,20 +38,20 @@ const ResultLists = () => {
     setFilter(event.target.value.toLowerCase().trim());
   };
 
-  useEffect(() => {
-    eventsApi
-      .get('/')
-      .then((response) => {
-        setEvents(
-          response.data.data.filter(
-            (event) => event.date <= currentDate && event.type === 'club'
-          )
-        );
-      })
-      .catch((error) => {
-        console.error('Error', error);
-      });
-  }, [setEvents, currentDate]);
+  const getResultRow = (event) => (
+    <tr key={event.id}>
+      <td>{formatDate(event.date)}</td>
+      <td>
+        <Link to={`events/${event.id}`}>{event.name} </Link>
+      </td>
+      <td>
+        {event.distance} {event.unit}
+      </td>
+      <td>
+        {event.location}, {event.city}
+      </td>
+    </tr>
+  );
 
   return (
     <div>
@@ -76,7 +77,7 @@ const ResultLists = () => {
                   event.name.toLowerCase().includes(filter) ||
                   event.distance.toLowerCase().startsWith(filter)
               )
-              .map((event) => getEventRow(event))}
+              .map((event) => getResultRow(event))}
           </tbody>
         </table>
       </div>

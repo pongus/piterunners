@@ -3,11 +3,23 @@ import { Link } from 'react-router-dom';
 import eventsApi from '../apis/eventsApi';
 import eventType from '../helpers/eventType';
 
+const currentDate = new Date().toLocaleDateString('sv-SE');
+const formatDate = (date) => new Date(date).toLocaleDateString('sv-SE');
+
 const EventList = () => {
   const [events, setEvents] = useState([]);
   const [filter, setFilter] = useState('all');
-  const currentDate = new Date().toLocaleDateString('sv-SE');
-  const formatDate = (date) => new Date(date).toLocaleDateString('sv-SE');
+
+  useEffect(() => {
+    eventsApi
+      .get('/')
+      .then((response) => {
+        setEvents(response.data.data.filter(({ date }) => date >= currentDate));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [setEvents]);
 
   const getTypes = () => {
     const types = [];
@@ -22,21 +34,6 @@ const EventList = () => {
 
     return types;
   };
-
-  const getEventRow = ({ id, date, name, location, city, distance, unit }) => (
-    <tr key={id}>
-      <td>{formatDate(date)}</td>
-      <td>
-        <Link to={`events/${id}`}>{name}</Link>
-      </td>
-      <td>
-        {distance} {unit}
-      </td>
-      <td>
-        {location}, {city}
-      </td>
-    </tr>
-  );
 
   const getFilter = () =>
     getTypes().length > 1 && (
@@ -58,16 +55,20 @@ const EventList = () => {
     setFilter(event.target.value);
   };
 
-  useEffect(() => {
-    eventsApi
-      .get('/')
-      .then((response) => {
-        setEvents(response.data.data.filter(({ date }) => date >= currentDate));
-      })
-      .catch((error) => {
-        console.error('Error', error);
-      });
-  }, [setEvents, currentDate]);
+  const getEventRow = ({ id, date, name, location, city, distance, unit }) => (
+    <tr key={id}>
+      <td>{formatDate(date)}</td>
+      <td>
+        <Link to={`events/${id}`}>{name}</Link>
+      </td>
+      <td>
+        {distance} {unit}
+      </td>
+      <td>
+        {location}, {city}
+      </td>
+    </tr>
+  );
 
   return (
     <article>

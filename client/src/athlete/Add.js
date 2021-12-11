@@ -20,7 +20,7 @@ const AthleteAdd = () => {
         }
       })
       .catch((error) => {
-        console.error('Error', error);
+        console.error(error);
       });
   };
 

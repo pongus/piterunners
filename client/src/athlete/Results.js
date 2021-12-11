@@ -12,7 +12,7 @@ const AthleteResults = ({ athleteId: id }) => {
         setResults(response.data.data);
       })
       .catch((error) => {
-        console.error('Error', error);
+        console.error(error);
       });
   }, [id, setResults]);
 
@@ -44,7 +44,7 @@ const AthleteResults = ({ athleteId: id }) => {
       </tbody>
     </table>
   ) : (
-    <p>Inga resultat hittades</p>
+    <p>Inga resultat</p>
   );
 };
 

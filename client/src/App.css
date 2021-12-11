@@ -213,7 +213,7 @@ footer {
   left: 0;
   width: 100%;
   background-color: #f9f9f9;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
 }
 
 footer .menu {

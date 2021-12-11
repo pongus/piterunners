@@ -18,6 +18,7 @@ const MainMenu = () => {
         <li>
           <Link to="/athletes">Löpare</Link>
         </li>
+
         {user.isLoggedIn ? (
           <>
             <li>
