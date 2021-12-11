@@ -4,8 +4,6 @@ import { func, shape, string } from 'prop-types';
 const AthleteForm = ({ values, onSubmit }) => {
   const { firstname, lastname, gender, dob, club } = values;
 
-  console.log('athlete values', values);
-
   return (
     <form onSubmit={onSubmit}>
       <input
