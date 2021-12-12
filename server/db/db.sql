@@ -27,6 +27,9 @@ CREATE TABLE events(
 
 INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2020-05-21', '09:00:00', 'Norrstrand', 'Piteå', '10', 'km');
 INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Martins träningstävling', 'club', '2020-07-02', '18:00:00', 'Grisberget', 'Piteå', '4,9', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Martins träningstävling', 'club', '2020-07-09', '18:00:00', 'Grisberget', 'Piteå', '3,1', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Martins träningstävling', 'club', '2020-07-16', '18:00:00', 'Grisberget', 'Piteå', '4', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Martins träningstävling', 'club', '2020-07-23', '18:00:00', 'Grisberget', 'Piteå', '4,9', 'km');
 
 CREATE TABLE results(
   id SERIAL PRIMARY KEY,
@@ -40,3 +43,11 @@ CREATE TABLE results(
 INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (1, 1, '0', '37', '52');
 INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (2, 1, '0', '17', '58');
 INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (2, 3, '0', '17', '50');
+INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (3, 1, '0', '10', '53');
+INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (3, 2, '0', '12', '59');
+INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (3, 3, '0', '10', '40');
+INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (4, 1, '0', '14', '25');
+INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (4, 2, '0', '16', '47');
+INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (4, 3, '0', '13', '51');
+INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (5, 1, '0', '17', '43');
+INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (5, 2, '0', '20', '42');

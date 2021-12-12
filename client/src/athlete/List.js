@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import athletesApi from '../apis/athletesApi';
+import Loader from '../common/Loader';
 
 const AthleteList = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [athletes, setAthletes] = useState([]);
   const [filter, setFilter] = useState('');
 
@@ -11,6 +13,9 @@ const AthleteList = () => {
       .get('/')
       .then((response) => {
         setAthletes(response.data.data);
+      })
+      .then((data) => {
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -48,29 +53,35 @@ const AthleteList = () => {
     <div>
       <h2>Löpare</h2>
 
-      {getFilter()}
+      <Loader isLoading={isLoading} />
 
-      <div className="overflow-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th>Förnamn</th>
-              <th>Efternamn</th>
-              <th>Födelseår</th>
-              <th>Klubb</th>
-            </tr>
-          </thead>
-          <tbody>
-            {athletes
-              .filter(
-                (athlete) =>
-                  athlete.firstname.toLowerCase().includes(filter) ||
-                  athlete.lastname.toLowerCase().includes(filter)
-              )
-              .map((athlete) => getAthleteRow(athlete))}
-          </tbody>
-        </table>
-      </div>
+      {athletes.length > 0 && (
+        <>
+          {getFilter()}
+
+          <div className="overflow-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Förnamn</th>
+                  <th>Efternamn</th>
+                  <th>Födelseår</th>
+                  <th>Klubb</th>
+                </tr>
+              </thead>
+              <tbody>
+                {athletes
+                  .filter(
+                    (athlete) =>
+                      athlete.firstname.toLowerCase().includes(filter) ||
+                      athlete.lastname.toLowerCase().includes(filter)
+                  )
+                  .map((athlete) => getAthleteRow(athlete))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
     </div>
   );
 };

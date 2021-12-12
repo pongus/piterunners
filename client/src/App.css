@@ -38,7 +38,7 @@ h3 {
   margin-top: 50px;
   color: #f5690b;
   font-family: 'Oswald', sans-serif;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
 }
 
@@ -266,4 +266,22 @@ footer .menu {
   height: 1px;
   margin: -1px;
   overflow: hidden;
+}
+
+/* Loader */
+
+.loader {
+  width: 50px;
+  height: 50px;
+  margin: 50px auto;
+  border: 6px solid #f1f1f1;
+  border-right-color: #f5690b;
+  border-radius: 50%;
+  animation: loader 1s infinite linear;
+}
+
+@keyframes loader {
+  to {
+    transform: rotate(1turn);
+  }
 }

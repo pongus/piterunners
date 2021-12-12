@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import eventsApi from '../apis/eventsApi';
 import eventType from '../helpers/eventType';
+import Loader from '../common/Loader';
 
 const currentDate = new Date().toLocaleDateString('sv-SE');
 const formatDate = (date) => new Date(date).toLocaleDateString('sv-SE');
 
 const EventList = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [events, setEvents] = useState([]);
   const [filter, setFilter] = useState('all');
 
@@ -15,6 +17,9 @@ const EventList = () => {
       .get('/')
       .then((response) => {
         setEvents(response.data.data.filter(({ date }) => date >= currentDate));
+      })
+      .then((data) => {
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -73,6 +78,8 @@ const EventList = () => {
   return (
     <article>
       <h2>Tävlingar</h2>
+
+      <Loader isLoading={isLoading} />
 
       {events.length > 0 && (
         <>
