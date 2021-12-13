@@ -30,6 +30,7 @@ INSERT INTO events (name, type, date, time, location, city, distance, unit) VALU
 INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Martins träningstävling', 'club', '2020-07-09', '18:00:00', 'Grisberget', 'Piteå', '3,1', 'km');
 INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Martins träningstävling', 'club', '2020-07-16', '18:00:00', 'Grisberget', 'Piteå', '4', 'km');
 INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Martins träningstävling', 'club', '2020-07-23', '18:00:00', 'Grisberget', 'Piteå', '4,9', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Martins träningstävling', 'club', '2020-07-30', '18:00:00', 'Grisberget', 'Piteå', '10', 'km');
 
 CREATE TABLE results(
   id SERIAL PRIMARY KEY,
@@ -51,3 +52,6 @@ INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (4,
 INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (4, 3, '0', '13', '51');
 INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (5, 1, '0', '17', '43');
 INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (5, 2, '0', '20', '42');
+INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (6, 1, '0', '38', '43');
+INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (6, 2, '0', '44', '50');
+INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (6, 3, '0', '37', '52');
