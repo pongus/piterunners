@@ -1,22 +1,21 @@
-import React from 'react';
-import AthleteForm from './Form';
 import athletesApi from '../apis/athletesApi';
+import AthleteForm from './Form';
 
 const AthleteAdd = () => {
-  const addAthlete = (event) => {
-    event.preventDefault();
+  const addAthlete = (e) => {
+    e.preventDefault();
 
     athletesApi
       .post('/', {
-        firstname: event.target.firstname.value,
-        lastname: event.target.lastname.value,
-        gender: event.target.gender.value,
-        dob: event.target.dob.value,
-        club: event.target.club.value,
+        firstname: e.target.firstname.value,
+        lastname: e.target.lastname.value,
+        gender: e.target.gender.value,
+        dob: e.target.dob.value,
+        club: e.target.club.value,
       })
       .then((response) => {
         if (response.status === 200) {
-          event.target.reset();
+          e.target.reset();
         }
       })
       .catch((error) => {
@@ -25,11 +24,11 @@ const AthleteAdd = () => {
   };
 
   return (
-    <div>
+    <article>
       <h2>Skapa löpare</h2>
 
       <AthleteForm onSubmit={addAthlete} />
-    </div>
+    </article>
   );
 };
 

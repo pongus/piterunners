@@ -1,6 +1,7 @@
-const getPace = (h, m, s, d) => {
-  const total = parseInt(h) * 3600 + parseInt(m) * 60 + parseInt(s);
-  const pace = total / parseFloat(d.replace(',', '.'));
+const getPace = (h, m, s, d, u) => {
+  const time = parseInt(h) * 3600 + parseInt(m) * 60 + parseInt(s);
+  const distance = String(u === 'm' ? d / 1000 : d).replace(',', '.');
+  const pace = time / distance;
   const min = parseInt(pace / 60);
   const sec = Math.round(pace % 60);
 

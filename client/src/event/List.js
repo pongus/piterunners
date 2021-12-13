@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import eventsApi from '../apis/eventsApi';
 import eventType from '../helpers/eventType';
+import currentDate from '../helpers/currentDate';
+import formatDate from '../helpers/formatDate';
 import Loader from '../common/Loader';
-
-const currentDate = new Date().toLocaleDateString('sv-SE');
-const formatDate = (date) => new Date(date).toLocaleDateString('sv-SE');
 
 const EventList = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,6 +22,7 @@ const EventList = () => {
       })
       .catch((error) => {
         console.error(error);
+        setIsLoading(false);
       });
   }, [setEvents]);
 
@@ -62,15 +62,17 @@ const EventList = () => {
 
   const getEventRow = ({ id, date, name, location, city, distance, unit }) => (
     <tr key={id}>
-      <td>{formatDate(date)}</td>
+      <td>{date && formatDate(date)}</td>
       <td>
         <Link to={`events/${id}`}>{name}</Link>
       </td>
       <td>
-        {distance} {unit}
+        {distance} {distance && unit}
       </td>
       <td>
-        {location}, {city}
+        {location}
+        {location && city && ', '}
+        {city}
       </td>
     </tr>
   );

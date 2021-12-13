@@ -1,4 +1,3 @@
-import React from 'react';
 import { func, shape, string } from 'prop-types';
 
 const EventForm = ({ values, onSubmit }) => {

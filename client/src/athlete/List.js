@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import athletesApi from '../apis/athletesApi';
 import Loader from '../common/Loader';
@@ -19,6 +19,7 @@ const AthleteList = () => {
       })
       .catch((error) => {
         console.error(error);
+        setIsLoading(false);
       });
   }, [setAthletes]);
 
@@ -50,7 +51,7 @@ const AthleteList = () => {
   );
 
   return (
-    <div>
+    <article>
       <h2>Löpare</h2>
 
       <Loader isLoading={isLoading} />
@@ -82,7 +83,7 @@ const AthleteList = () => {
           </div>
         </>
       )}
-    </div>
+    </article>
   );
 };
 

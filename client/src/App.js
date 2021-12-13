@@ -18,17 +18,17 @@ import LoginForm from './auth/LoginForm';
 import LogoutForm from './auth/LogoutForm';
 
 // Athletes
-import AthleteAdd from './athlete/Add';
-import AthleteDetails from './athlete/Details';
 import AthleteList from './athlete/List';
+import AthleteDetails from './athlete/Details';
+import AthleteAdd from './athlete/Add';
 
 // Events
-import EventAdd from './event/Add';
-import EventDetails from './event/Details';
 import EventList from './event/List';
+import EventDetails from './event/Details';
+import EventAdd from './event/Add';
 
 // Results
-import ResultLists from './result/Lists';
+import ResultList from './result/List';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -63,7 +63,7 @@ const App = () => {
                 <EventList />
               </Route>
               <Route path="/results">
-                <ResultLists />
+                <ResultList />
               </Route>
               <Route path="/athletes/add">
                 {user.isLoggedIn ? <AthleteAdd /> : <Redirect to="/login" />}

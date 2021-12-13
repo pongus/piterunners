@@ -1,80 +1,101 @@
-import { useState, useEffect, useContext } from 'react';
-import { string } from 'prop-types';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import eventsApi from '../apis/eventsApi';
+import currentDate from '../helpers/currentDate';
+import formatDate from '../helpers/formatDate';
+import Loader from '../common/Loader';
 
-import UserContext from '../auth/User';
-import resultsApi from '../apis/resultsApi';
-
-import ResultAdd from './Add';
-import ResultDelete from './Delete';
-
-const ResultList = ({ eventId: id }) => {
-  const user = useContext(UserContext);
+const ResultList = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [results, setResults] = useState([]);
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    resultsApi
-      .get(`/event/${id}`)
+    eventsApi
+      .get('/')
       .then((response) => {
-        setResults(response.data.data);
+        setResults(
+          response.data.data.filter(
+            (event) => event.date <= currentDate && event.type === 'club'
+          )
+        );
+      })
+      .then((data) => {
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
+        setIsLoading(false);
       });
-  }, [id, setResults]);
+  }, [setResults]);
 
-  const getResultRow = (result) => (
-    <tr key={result.id}>
-      <td>{result.rank}</td>
-      <td>
-        <Link to={`/athletes/${result.athletes_id}`}>{result.firstname}</Link>
-      </td>
-      <td>
-        <Link to={`/athletes/${result.athletes_id}`}>{result.lastname}</Link>
-      </td>
-      <td>
-        {result.hours}:{result.minutes}:{result.seconds}
-      </td>
+  const getFilter = () => (
+    <div className="filter">
+      <input
+        type="text"
+        placeholder="Filtrera på tävling eller distans"
+        onChange={handleFilter}
+      />
+    </div>
+  );
 
-      {user.isLoggedIn && (
-        <td>
-          <ResultDelete resultId={result.id} />
-        </td>
-      )}
+  const handleFilter = (event) => {
+    setFilter(event.target.value.toLowerCase().trim());
+  };
+
+  const getResultRow = (event) => (
+    <tr key={event.id}>
+      <td>{formatDate(event.date)}</td>
+      <td>
+        <Link to={`events/${event.id}`}>{event.name}</Link>
+      </td>
+      <td>
+        {event.distance} {event.distance && event.unit}
+      </td>
+      <td>
+        {event.location}
+        {event.location && event.city && ', '}
+        {event.city}
+      </td>
     </tr>
   );
 
   return (
-    <div>
-      {user.isLoggedIn && <ResultAdd eventId={id} results={results} />}
+    <article>
+      <h2>Resultat</h2>
+
+      <Loader isLoading={isLoading} />
 
       {results.length > 0 && (
-        <div>
-          <h3>Resultat</h3>
+        <>
+          {getFilter()}
 
           <div className="overflow-scroll">
             <table>
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Förnamn</th>
-                  <th>Efternamn</th>
-                  <th>Tid</th>
-                  {user.isLoggedIn && <th></th>}
+                  <th>Datum</th>
+                  <th>Tävling</th>
+                  <th>Distans</th>
+                  <th>Plats</th>
                 </tr>
               </thead>
 
-              <tbody>{results.map((result) => getResultRow(result))}</tbody>
+              <tbody>
+                {results
+                  .filter(
+                    (event) =>
+                      event.name.toLowerCase().includes(filter) ||
+                      event.distance.toLowerCase().startsWith(filter)
+                  )
+                  .map((event) => getResultRow(event))}
+              </tbody>
             </table>
           </div>
-        </div>
+        </>
       )}
-    </div>
+    </article>
   );
-};
-
-ResultList.propTypes = {
-  eventId: string.isRequired,
 };
 
 export default ResultList;

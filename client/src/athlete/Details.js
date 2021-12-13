@@ -1,9 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+
 import UserContext from '../auth/User';
-import AthleteForm from './Form';
-import AthleteResults from './Results';
 import athletesApi from '../apis/athletesApi';
+
+import AthleteEdit from './Edit';
+import AthleteDelete from './Delete';
+import AthleteResult from './Result';
 
 const AthleteDetails = () => {
   const { id } = useParams();
@@ -22,77 +25,28 @@ const AthleteDetails = () => {
       });
   }, [id, setAthlete]);
 
-  const editAthlete = (event) => {
-    event.preventDefault();
-
-    athletesApi
-      .put(`/${id}`, {
-        firstname: event.target.firstname.value,
-        lastname: event.target.lastname.value,
-        gender: event.target.gender.value,
-        dob: event.target.dob.value,
-        club: event.target.club.value,
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          setIsEditable(false);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-
-  const deleteAthlete = () => {
-    athletesApi
-      .delete(`/${id}`)
-      .then((response) => {
-        if (response.status === 200) {
-          window.location.href = '/athletes';
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-
   return (
-    <div>
+    <article>
       <h2>
         {athlete.firstname} {athlete.lastname}
       </h2>
 
       {user.isLoggedIn && (
-        <div className="buttons">
-          <button type="button" onClick={() => setIsEditable(!isEditable)}>
-            Redigera
-          </button>
-
-          <button type="button" onClick={() => deleteAthlete()}>
-            Ta bort
-          </button>
-        </div>
-      )}
-
-      {isEditable && (
         <>
-          <h3>Redigera</h3>
+          <div className="buttons">
+            <button type="button" onClick={() => setIsEditable(!isEditable)}>
+              Redigera
+            </button>
 
-          <AthleteForm
-            values={{
-              firstname: athlete.firstname,
-              lastname: athlete.lastname,
-              gender: athlete.gender,
-              dob: athlete.dob,
-              club: athlete.club,
-            }}
-            onSubmit={editAthlete}
-          />
+            <AthleteDelete athleteId={id} />
+          </div>
+
+          {isEditable && <AthleteEdit athlete={athlete} />}
         </>
       )}
 
-      <AthleteResults athleteId={id} />
-    </div>
+      <AthleteResult athleteId={id} />
+    </article>
   );
 };
 
