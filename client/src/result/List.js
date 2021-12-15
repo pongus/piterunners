@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import eventsApi from '../apis/eventsApi';
 import currentDate from '../helpers/currentDate';
 import formatDate from '../helpers/formatDate';
+import formatDistance from '../helpers/formatDistance';
 import Loader from '../common/Loader';
 
 const ResultList = () => {
@@ -49,9 +50,7 @@ const ResultList = () => {
       <td>
         <Link to={`events/${event.id}`}>{event.name}</Link>
       </td>
-      <td>
-        {event.distance} {event.distance && event.unit}
-      </td>
+      <td>{formatDistance(event.distance, event.unit)}</td>
       <td>
         {event.location}
         {event.location && event.city && ', '}

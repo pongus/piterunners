@@ -3,6 +3,7 @@ import { string } from 'prop-types';
 import { Link } from 'react-router-dom';
 import resultsApi from '../apis/resultsApi';
 import formatDate from '../helpers/formatDate';
+import formatDistance from '../helpers/formatDistance';
 import getPace from '../helpers/getPace';
 import Loader from '../common/Loader';
 
@@ -58,9 +59,7 @@ const AthleteResults = ({ athleteId: id }) => {
                     <td>
                       <Link to={`/events/${id}`}>{name}</Link>
                     </td>
-                    <td>
-                      {distance} {unit}
-                    </td>
+                    <td>{formatDistance(distance, unit)}</td>
                     <td>
                       {hours}:{minutes}:{seconds}
                     </td>

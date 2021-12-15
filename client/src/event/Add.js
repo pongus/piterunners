@@ -13,7 +13,7 @@ const EventAdd = () => {
         time: e.target.time.value,
         location: e.target.location.value,
         city: e.target.city.value,
-        distance: e.target.distance.value,
+        distance: e.target.distance.value.replace(/\s/g, ''),
         unit: e.target.unit.value,
         info: e.target.info.value,
         homepage: e.target.homepage.value,

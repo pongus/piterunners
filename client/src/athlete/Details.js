@@ -26,27 +26,29 @@ const AthleteDetails = () => {
   }, [id, setAthlete]);
 
   return (
-    <article>
-      <h2>
-        {athlete.firstname} {athlete.lastname}
-      </h2>
+    athlete && (
+      <article>
+        <h2>
+          {athlete.firstname} {athlete.lastname}
+        </h2>
 
-      {user.isLoggedIn && (
-        <>
-          <div className="buttons">
-            <button type="button" onClick={() => setIsEditable(!isEditable)}>
-              Redigera
-            </button>
+        {user.isLoggedIn && (
+          <>
+            <div className="buttons">
+              <button type="button" onClick={() => setIsEditable(!isEditable)}>
+                Redigera
+              </button>
 
-            <AthleteDelete athleteId={id} />
-          </div>
+              <AthleteDelete athleteId={id} />
+            </div>
 
-          {isEditable && <AthleteEdit athlete={athlete} />}
-        </>
-      )}
+            {isEditable && <AthleteEdit athlete={athlete} />}
+          </>
+        )}
 
-      <AthleteResult athleteId={id} />
-    </article>
+        <AthleteResult athleteId={id} />
+      </article>
+    )
   );
 };
 

@@ -4,6 +4,7 @@ import eventsApi from '../apis/eventsApi';
 import eventType from '../helpers/eventType';
 import currentDate from '../helpers/currentDate';
 import formatDate from '../helpers/formatDate';
+import formatDistance from '../helpers/formatDistance';
 import Loader from '../common/Loader';
 
 const EventList = () => {
@@ -66,9 +67,7 @@ const EventList = () => {
       <td>
         <Link to={`events/${id}`}>{name}</Link>
       </td>
-      <td>
-        {distance} {distance && unit}
-      </td>
+      <td>{formatDistance(distance, unit)}</td>
       <td>
         {location}
         {location && city && ', '}
