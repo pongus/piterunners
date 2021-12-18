@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
-import { array, string } from 'prop-types';
+import { array, func, string } from 'prop-types';
 import athletesApi from '../apis/athletesApi';
 import resultsApi from '../apis/resultsApi';
+import formatHours from '../helpers/formatHours';
+import formatMinutesAndSeconds from '../helpers/formatMinutesAndSeconds';
 
-const ResultAdd = ({ eventId: id, results }) => {
+const ResultAdd = ({ eventId: id, results, onAdd }) => {
   const [athletes, setAthletes] = useState([]);
 
   useEffect(() => {
@@ -24,13 +26,14 @@ const ResultAdd = ({ eventId: id, results }) => {
       .post('/', {
         events_id: parseInt(id),
         athletes_id: parseInt(e.target.athlete.value),
-        hours: e.target.hours.value || '0',
-        minutes: e.target.minutes.value,
-        seconds: e.target.seconds.value,
+        hours: formatHours(e.target.hours.value),
+        minutes: formatMinutesAndSeconds(e.target.minutes.value),
+        seconds: formatMinutesAndSeconds(e.target.seconds.value),
       })
       .then((response) => {
         if (response.status === 200) {
           e.target.reset();
+          onAdd();
         }
       })
       .catch((error) => {
@@ -64,13 +67,13 @@ const ResultAdd = ({ eventId: id, results }) => {
           name="hours"
           placeholder="hh"
           maxLength="2"
+          required
         />
         <input
           type="text"
           id="minutes"
           name="minutes"
           placeholder="mm"
-          minLength="2"
           maxLength="2"
           required
         />
@@ -79,7 +82,6 @@ const ResultAdd = ({ eventId: id, results }) => {
           id="seconds"
           name="seconds"
           placeholder="ss"
-          minLength="2"
           maxLength="2"
           required
         />
@@ -91,6 +93,7 @@ const ResultAdd = ({ eventId: id, results }) => {
 
 ResultAdd.propTypes = {
   eventId: string.isRequired,
+  onAdd: func.isRequired,
   results: array,
 };
 

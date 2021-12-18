@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import athletesApi from '../apis/athletesApi';
+import useSortTable from '../helpers/useSortTable';
 import Loader from '../common/Loader';
 
 const AthleteList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [athletes, setAthletes] = useState([]);
   const [filter, setFilter] = useState('');
+  const { items, sortBy } = useSortTable(athletes);
 
   useEffect(() => {
     athletesApi
@@ -28,14 +30,10 @@ const AthleteList = () => {
       <input
         type="text"
         placeholder="Filtrera på förnamn eller efternamn"
-        onChange={handleFilter}
+        onChange={(event) => setFilter(event.target.value.toLowerCase().trim())}
       />
     </div>
   );
-
-  const handleFilter = (event) => {
-    setFilter(event.target.value.toLowerCase().trim());
-  };
 
   const getAthleteRow = (athlete) => (
     <tr key={athlete.id}>
@@ -45,7 +43,6 @@ const AthleteList = () => {
       <td>
         <Link to={`athletes/${athlete.id}`}>{athlete.lastname}</Link>
       </td>
-      <td>{athlete.dob}</td>
       <td>{athlete.club}</td>
     </tr>
   );
@@ -64,14 +61,15 @@ const AthleteList = () => {
             <table>
               <thead>
                 <tr>
-                  <th>Förnamn</th>
+                  <th className="sortable" onClick={() => sortBy('firstname')}>
+                    Förnamn
+                  </th>
                   <th>Efternamn</th>
-                  <th>Födelseår</th>
                   <th>Klubb</th>
                 </tr>
               </thead>
               <tbody>
-                {athletes
+                {items
                   .filter(
                     (athlete) =>
                       athlete.firstname.toLowerCase().includes(filter) ||

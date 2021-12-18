@@ -38,19 +38,39 @@ INSERT INTO events (name, type, date, time, location, city, distance, unit) VALU
 INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2020-11-04', '17:15:00', 'PiteEnergi arena', 'Piteå', '1000', 'm');
 
 /* 2021 */
-INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Time Trial', 'club', '2021-05-08', '09:00:00', 'Polishuset', 'Piteå', '5', 'km');
-INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Time Trial', 'club', '2021-05-22', '09:00:00', 'Öjebyn', 'Piteå', '10', 'km');
-INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Time Trial', 'club', '2021-06-19', '09:00:00', 'LF arena', 'Piteå', '10000', 'm');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2021-05-08', '09:00:00', 'Polishuset', 'Piteå', '5', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2021-05-22', '09:00:00', 'Öjebyn', 'Piteå', '10', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2021-06-19', '09:00:00', 'LF arena', 'Piteå', '10000', 'm');
 INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Martins träningstävling', 'club', '2021-07-01', '18:00:00', 'Grisberget', 'Piteå', '4,9', 'km');
 INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Martins träningstävling', 'club', '2021-07-08', '18:00:00', 'Grisberget', 'Piteå', '3,1', 'km');
 INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Martins träningstävling', 'club', '2021-07-15', '18:00:00', 'Grisberget', 'Piteå', '4', 'km');
 INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Martins träningstävling', 'club', '2021-07-22', '18:00:00', 'Grisberget', 'Piteå', '4,9', 'km');
 INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Martins träningstävling', 'club', '2021-07-29', '18:00:00', 'Grisberget', 'Piteå', '10', 'km');
-INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Time Trial', 'club', '2021-08-07', '09:00:00', 'LF arena', 'Piteå', '3000', 'm');
-INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Time Trial', 'club', '2021-08-21', '09:00:00', 'LF arena', 'Piteå', '5000', 'm');
-INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Time Trial', 'club', '2021-09-04', '09:00:00', 'Degeränget', 'Piteå', '21,1', 'km');
-INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Time Trial', 'club', '2021-09-18', '09:00:00', 'Öjebyn', 'Piteå', '10', 'km');
-INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Testlopp', 'club', '2021-11-10', '17:15:00', 'PiteEnergi arena', 'Piteå', '1000', 'm');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2021-08-07', '09:00:00', 'LF arena', 'Piteå', '3000', 'm');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2021-08-21', '09:00:00', 'LF arena', 'Piteå', '5000', 'm');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2021-09-04', '09:00:00', 'Degeränget', 'Piteå', '21,1', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2021-09-18', '09:00:00', 'Öjebyn', 'Piteå', '10', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2021-11-10', '17:15:00', 'PiteEnergi arena', 'Piteå', '1000', 'm');
+
+/* 2022 */
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2022-05-07', '09:00:00', '', 'Piteå', '5', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2022-05-21', '09:00:00', '', 'Piteå', '10', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2022-06-04', '09:00:00', 'SCA-spåret', 'Piteå', '10', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2022-06-18', '09:00:00', 'LF arena', 'Piteå', '5000', 'm');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Martins träningstävling', 'club', '2022-07-07', '18:00:00', 'Grisberget', 'Piteå', '4,9', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Martins träningstävling', 'club', '2022-07-14', '18:00:00', 'Grisberget', 'Piteå', '3,1', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Martins träningstävling', 'club', '2022-07-21', '18:00:00', 'Grisberget', 'Piteå', '4', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Martins träningstävling', 'club', '2022-07-28', '18:00:00', 'Grisberget', 'Piteå', '10', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2022-08-13', '09:00:00', 'LF arena', 'Piteå', '3000', 'm');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2022-08-27', '09:00:00', 'LF arena', 'Piteå', '5000', 'm');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2022-09-10', '09:00:00', '', 'Piteå', '10', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Träningstävling', 'club', '2022-09-24', '09:00:00', '', 'Piteå', '21,1', 'km');
+
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Göteborgsvarvet', 'national', '2022-05-21', '12:00:00', '', 'Göteborg', '21,1', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Stockholm Marathon', 'national', '2022-06-04', '12:00:00', '', 'Stockholm', '42,2', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Stockholm Halvmarathon', 'national', '2022-09-17', '12:00:00', '', 'Stockholm', '21,1', 'km');
+INSERT INTO events (name, type, date, time, location, city, distance, unit) VALUES ('Lidingöloppet', 'national', '2022-09-24', '12:00:00', '', 'Stockholm', '30', 'km');
+
 
 CREATE TABLE results(
   id SERIAL PRIMARY KEY,
@@ -109,3 +129,5 @@ INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (22
 INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (22, 2, '0', '37', '59');
 INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (22, 3, '0', '34', '09');
 INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES (23, 3, '0', '2', '44');
+
+/* 2022 */

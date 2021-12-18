@@ -109,7 +109,7 @@ app
   .get(async (req, res, next) => {
     try {
       const data = await db.query(
-        'SELECT * FROM events ORDER BY date DESC, time DESC'
+        'SELECT * FROM events WHERE date >= current_date ORDER BY date ASC, time ASC'
       );
 
       res.status(200).json({
@@ -228,23 +228,39 @@ app
 
 // Results
 
-app.route('/api/v1/results').post(async (req, res, next) => {
-  const { events_id, athletes_id, hours, minutes, seconds } = req.body;
+app
+  .route('/api/v1/results')
+  .get(async (req, res, next) => {
+    try {
+      const data = await db.query(
+        "SELECT * FROM events WHERE type = 'club' AND date <= current_date ORDER BY date DESC, time DESC"
+      );
 
-  try {
-    const data = await db.query(
-      'INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [events_id, athletes_id, hours, minutes, seconds]
-    );
+      res.status(200).json({
+        status: 'success',
+        data: data.rows,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  })
+  .post(async (req, res, next) => {
+    const { events_id, athletes_id, hours, minutes, seconds } = req.body;
 
-    res.status(200).json({
-      status: 'success',
-      data: data.rows[0],
-    });
-  } catch (error) {
-    console.error(error);
-  }
-});
+    try {
+      const data = await db.query(
+        'INSERT INTO results (events_id, athletes_id, hours, minutes, seconds) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+        [events_id, athletes_id, hours, minutes, seconds]
+      );
+
+      res.status(200).json({
+        status: 'success',
+        data: data.rows[0],
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  });
 
 // Results ID
 

@@ -1,25 +1,22 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import eventsApi from '../apis/eventsApi';
-import currentDate from '../helpers/currentDate';
+import resultsApi from '../apis/resultsApi';
 import formatDate from '../helpers/formatDate';
 import formatDistance from '../helpers/formatDistance';
+import useSortTable from '../helpers/useSortTable';
 import Loader from '../common/Loader';
 
 const ResultList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [results, setResults] = useState([]);
   const [filter, setFilter] = useState('');
+  const { items, sortBy } = useSortTable(results);
 
   useEffect(() => {
-    eventsApi
+    resultsApi
       .get('/')
       .then((response) => {
-        setResults(
-          response.data.data.filter(
-            (event) => event.date <= currentDate && event.type === 'club'
-          )
-        );
+        setResults(response.data.data);
       })
       .then((data) => {
         setIsLoading(false);
@@ -35,14 +32,10 @@ const ResultList = () => {
       <input
         type="text"
         placeholder="Filtrera på tävling eller distans"
-        onChange={handleFilter}
+        onChange={(event) => setFilter(event.target.value.toLowerCase().trim())}
       />
     </div>
   );
-
-  const handleFilter = (event) => {
-    setFilter(event.target.value.toLowerCase().trim());
-  };
 
   const getResultRow = (event) => (
     <tr key={event.id}>
@@ -73,7 +66,9 @@ const ResultList = () => {
             <table>
               <thead>
                 <tr>
-                  <th>Datum</th>
+                  <th className="sortable" onClick={() => sortBy('date')}>
+                    Datum
+                  </th>
                   <th>Tävling</th>
                   <th>Distans</th>
                   <th>Plats</th>
@@ -81,7 +76,7 @@ const ResultList = () => {
               </thead>
 
               <tbody>
-                {results
+                {items
                   .filter(
                     (event) =>
                       event.name.toLowerCase().includes(filter) ||

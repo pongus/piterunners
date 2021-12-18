@@ -83,7 +83,8 @@ input,
 select,
 textarea {
   display: block;
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   min-height: 50px;
   margin: 25px auto;
   padding: 10px 25px;
@@ -135,7 +136,8 @@ button[type='button'] {
 }
 
 button[type='submit'] {
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   height: 50px;
   padding: 10px 25px;
   font-size: 16px;
@@ -183,6 +185,10 @@ tbody tr:nth-of-type(even) {
   background-color: #f1f1f1;
 }
 
+.sortable {
+  cursor: pointer;
+}
+
 .logo {
   width: 150px;
   height: 150px;
@@ -217,10 +223,9 @@ footer {
 }
 
 footer .menu {
-  margin-bottom: 2px;
-  text-align: center;
   font-size: 10px;
   letter-spacing: 1px;
+  text-align: center;
 }
 
 .menu li {
@@ -231,6 +236,10 @@ footer .menu {
 
 .menu a {
   padding: 5px;
+}
+
+.data-list {
+  margin-bottom: 50px;
 }
 
 .data-list li {
@@ -248,7 +257,7 @@ footer .menu {
 
 .filter input,
 .filter select {
-  width: 100%;
+  max-width: none;
   border-radius: 12px;
 }
 
@@ -268,8 +277,6 @@ footer .menu {
   overflow: hidden;
 }
 
-/* Loader */
-
 .loader {
   width: 50px;
   height: 50px;
@@ -283,5 +290,46 @@ footer .menu {
 @keyframes loader {
   to {
     transform: rotate(1turn);
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  h2,
+  h3 {
+    margin-top: 35px;
+    margin-bottom: 35px;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  header .menu {
+    left: 0;
+    right: 0;
+    background-color: rgba(249, 249, 249, 0.9);
+    text-align: center;
+  }
+
+  .menu li {
+    margin: 15px 2px;
+  }
+
+  .logo {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 25px;
+  }
+
+  .data-list {
+    margin-bottom: 25px;
+  }
+
+  .data-list li {
+    margin: 10px;
   }
 }

@@ -5,7 +5,7 @@ const getPace = (h, m, s, d, u) => {
   const min = parseInt(pace / 60);
   const sec = Math.round(pace % 60);
 
-  return min + "'" + (sec > 10 ? sec : '0' + sec) + '/km';
+  return min + "'" + (sec >= 10 ? sec : '0' + sec) + '/km';
 };
 
 export default getPace;

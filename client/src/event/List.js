@@ -2,21 +2,22 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import eventsApi from '../apis/eventsApi';
 import eventType from '../helpers/eventType';
-import currentDate from '../helpers/currentDate';
 import formatDate from '../helpers/formatDate';
 import formatDistance from '../helpers/formatDistance';
+import useSortTable from '../helpers/useSortTable';
 import Loader from '../common/Loader';
 
 const EventList = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [events, setEvents] = useState([]);
   const [filter, setFilter] = useState('all');
+  const [events, setEvents] = useState([]);
+  const { items, sortBy } = useSortTable(events);
 
   useEffect(() => {
     eventsApi
       .get('/')
       .then((response) => {
-        setEvents(response.data.data.filter(({ date }) => date >= currentDate));
+        setEvents(response.data.data);
       })
       .then((data) => {
         setIsLoading(false);
@@ -44,7 +45,11 @@ const EventList = () => {
   const getFilter = () =>
     getTypes().length > 1 && (
       <div className="filter">
-        <select name="filter" defaultValue="all" onChange={handleFilter}>
+        <select
+          name="filter"
+          defaultValue="all"
+          onChange={(event) => setFilter(event.target.value)}
+        >
           <option key="all" value="all">
             Filtrera på tävlingstyp
           </option>
@@ -57,11 +62,16 @@ const EventList = () => {
       </div>
     );
 
-  const handleFilter = (event) => {
-    setFilter(event.target.value);
-  };
-
-  const getEventRow = ({ id, date, name, location, city, distance, unit }) => (
+  const getEventRow = ({
+    id,
+    date,
+    type,
+    name,
+    location,
+    city,
+    distance,
+    unit,
+  }) => (
     <tr key={id}>
       <td>{date && formatDate(date)}</td>
       <td>
@@ -73,6 +83,7 @@ const EventList = () => {
         {location && city && ', '}
         {city}
       </td>
+      <td>{eventType[type]}</td>
     </tr>
   );
 
@@ -90,15 +101,18 @@ const EventList = () => {
             <table>
               <thead>
                 <tr>
-                  <th>Datum</th>
+                  <th className="sortable" onClick={() => sortBy('date')}>
+                    Datum
+                  </th>
                   <th>Tävling</th>
                   <th>Distans</th>
                   <th>Plats</th>
+                  <th>Typ</th>
                 </tr>
               </thead>
 
               <tbody>
-                {events
+                {items
                   .filter((event) => filter === 'all' || filter === event.type)
                   .map((event) => getEventRow(event))}
               </tbody>

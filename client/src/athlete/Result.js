@@ -4,20 +4,18 @@ import { Link } from 'react-router-dom';
 import resultsApi from '../apis/resultsApi';
 import formatDate from '../helpers/formatDate';
 import formatDistance from '../helpers/formatDistance';
+import formatTime from '../helpers/formatTime';
 import getPace from '../helpers/getPace';
-import Loader from '../common/Loader';
+import useSortTable from '../helpers/useSortTable';
 
 const AthleteResults = ({ athleteId: id }) => {
-  const [isLoading, setIsLoading] = useState(true);
   const [results, setResults] = useState([]);
+  const { items, sortBy } = useSortTable(results);
 
   useEffect(() => {
     resultsApi(`/athlete/${id}`)
       .then((response) => {
         setResults(response.data.data);
-      })
-      .then((data) => {
-        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -25,53 +23,49 @@ const AthleteResults = ({ athleteId: id }) => {
   }, [id, setResults]);
 
   return (
-    <>
-      <Loader isLoading={isLoading} />
+    results.length > 0 && (
+      <div className="overflow-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th className="sortable" onClick={() => sortBy('date')}>
+                Datum
+              </th>
+              <th>Tävling</th>
+              <th>Distans</th>
+              <th>Tid</th>
+              <th>Tempo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((result) => {
+              const {
+                id,
+                date,
+                name,
+                distance,
+                unit,
+                hours,
+                minutes,
+                seconds,
+              } = result;
 
-      {results.length > 0 && (
-        <div className="overflow-scroll">
-          <table>
-            <thead>
-              <tr>
-                <th>Datum</th>
-                <th>Tävling</th>
-                <th>Distans</th>
-                <th>Tid</th>
-                <th>Tempo</th>
-              </tr>
-            </thead>
-            <tbody>
-              {results.map((result) => {
-                const {
-                  id,
-                  date,
-                  name,
-                  distance,
-                  unit,
-                  hours,
-                  minutes,
-                  seconds,
-                } = result;
-
-                return (
-                  <tr key={id}>
-                    <td>{formatDate(date)}</td>
-                    <td>
-                      <Link to={`/events/${id}`}>{name}</Link>
-                    </td>
-                    <td>{formatDistance(distance, unit)}</td>
-                    <td>
-                      {hours}:{minutes}:{seconds}
-                    </td>
-                    <td>{getPace(hours, minutes, seconds, distance, unit)}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </>
+              return (
+                <tr key={id}>
+                  <td>{formatDate(date)}</td>
+                  <td>
+                    <Link to={`/events/${id}`}>{name}</Link>
+                  </td>
+                  <td>{formatDistance(distance, unit)}</td>
+                  <td>{formatTime(hours, minutes, seconds)}</td>
+                  <td>{getPace(hours, minutes, seconds, distance, unit)}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    )
   );
 };
 

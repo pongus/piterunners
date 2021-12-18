@@ -1,9 +1,9 @@
-import { number, shape, string } from 'prop-types';
+import { func, number, shape, string } from 'prop-types';
 import formatDate from '../helpers/formatDate';
 import eventsApi from '../apis/eventsApi';
 import EventForm from './Form';
 
-const EventEdit = ({ event }) => {
+const EventEdit = ({ event, onEdit }) => {
   const {
     id,
     name,
@@ -33,6 +33,9 @@ const EventEdit = ({ event }) => {
         unit: e.target.unit.value,
         info: e.target.info.value,
         homepage: e.target.homepage.value,
+      })
+      .then(() => {
+        onEdit();
       })
       .catch((error) => {
         console.error(error);
@@ -76,6 +79,7 @@ EventEdit.propTypes = {
     info: string,
     homepage: string,
   }),
+  onEdit: func.isRequired,
 };
 
 export default EventEdit;
